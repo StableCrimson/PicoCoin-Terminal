@@ -11,7 +11,7 @@ def newUser():
 
     #Can we make a user with that name?
     if checkUserName(userName):
-        print("User with this name already exists")
+        print("User with this name already exists.")
         return 0
 
     privateKey = input("Please enter your private key: ")
@@ -72,10 +72,8 @@ def removeUser():
     key = input("Please enter the private key of the user: ")
 
     if stauber.verifyKey(key, checkUserName(name).publicKey):
-        print("Key authenticated successfully, user " + name + "removed.")
-
+        print("Key authenticated successfully, user", name, "removed.")
         users.remove(checkUserName(name))
-
     else:
         print("Unable to authenticate, key may be invalid.")
         return 0

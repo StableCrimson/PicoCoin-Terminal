@@ -6,18 +6,19 @@ class Block:
     SIGNATURE = "0110" #This will be in the hash of the block. If it's not there, we can't verify that the transaction this block represents is legitimate
     
 
-    def __init__(self, previous_block_hash, transaction_list):
+    def __init__(self, previous_block_hash, transaction_list, block_id):
         self.previous_block_hash = previous_block_hash
         self.transaction_list = transaction_list
+        self.block_id = block_id
 
-        self.block_data = "-".join(transaction_list) + "-" + previous_block_hash
+        self.block_data = "-".join(transaction_list) + "-" + previous_block_hash + "-" + str(block_id)
         self.block_hash = hashlib.sha256(self.block_data.encode()).hexdigest()
 
         #Introduce the idea of transaction signing, if the hash doesn't begin with 0000, then it's not a signed transaction
         nonce = 0
         while not self.block_hash.startswith(self.SIGNATURE):
             nonce += 1
-            self.block_data = "-".join(transaction_list) + "-" + previous_block_hash + "-" + str(nonce)
+            self.block_data = "-".join(transaction_list) + "-" + previous_block_hash + "-" + str(nonce) + "-" + str(block_id)
             self.block_hash = hashlib.sha256(self.block_data.encode()).hexdigest()
 
 

@@ -6,10 +6,10 @@ class Wallet:
     #Initialize
     def __init__(self, userName, privateKey):
         self.userName = userName
-        self.publicKey = stauber.createKey(privateKey)
+        self.publicKey = stauber.createKey(privateKey) #TODO Make the public key based on both the username and the password, otherwise people with the same password will have the same key
         self.balance = 0
 
-        print("User", userName, "created successfully!")
+        print("User created successfully! Welcome to your wallet,", userName + "!")
         print("Your public key is:", self.publicKey)
 
 '''

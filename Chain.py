@@ -1,10 +1,11 @@
+from Block import Block
 #Manage a record of the blocks
 
 chain = []
 
 #Add a block to the chain
-def addBlock(newBlock):
-    chain.append(newBlock)
+def addBlock(hash, content, id):
+    chain.append(Block(hash, content, id))
 
 #Get the most recent transaction
 def getLastTransaction():
