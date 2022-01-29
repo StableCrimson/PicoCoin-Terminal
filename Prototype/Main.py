@@ -37,5 +37,6 @@ def menu():
 
 #Main method
 if __name__ == "__main__":
+
     print("Welcome to the world's first PicoCoin terminal! How can I help you?")
     menu()

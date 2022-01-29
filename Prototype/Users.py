@@ -1,5 +1,6 @@
 from Wallet import Wallet
 import KeyManager as stauber
+import RecordHandler as dj
 
 #Manage the users on the blockchain
 users = []
@@ -17,6 +18,7 @@ def newUser():
     privateKey = input("Please enter your private key: ")
 
     users.append(Wallet(userName, privateKey))
+    dj.saveUser(userName, checkUserName(userName).publicKey, 0)
 
 #Is the user here?
 def checkUserName(userName):

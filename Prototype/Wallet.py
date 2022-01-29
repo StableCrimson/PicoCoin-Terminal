@@ -1,5 +1,4 @@
 import KeyManager as stauber
-
 #This is in charge of handling the user account and keeping a total of the current balance
 class Wallet:
 
@@ -11,6 +10,7 @@ class Wallet:
 
         print("User created successfully! Welcome to your wallet,", userName + "!")
         print("Your public key is:", self.publicKey)
+
 
 '''
 firstUser = Wallet("Rhyse", "Th15is@password")
