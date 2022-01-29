@@ -3,6 +3,7 @@
 This project started with a simple question: **"This 'blockchain' thing is really important to crypto. How does blockchain work?"** After watching a phenomenal explanation of the concept and execution on YouTube, I decided to give it a shot. So I wrote a simple blockchain in Python. "Cool," I thought. "What if I could make transactions myself, instead of hard-coding the debug ones?" So I added that. "What if I could view the previous transactions?" So I added that. "What if it was a menu-driven program that had user management, authentication, key generation/verificiation, and balance tracking?" So I added that. This project outgrew it's scope within a matter of hours. It was built with one intention, and each new feature I dreamt up had to be adapted more and more to work with my increasingly archaic code. So it's time for a complete rewrite. Start from scratch with a whole host of new QoL and security features in mind. This commit marks the transition from an ad-hoc crypto wallet that's the result of a bunch of code thrown on top of a blockchain demo, to something more: ***PicoCoin Terminal V1***
 
 ## Features I want to include in V1 and beyond:
+
 - New menu. Begin with signing in, after signing in your public key will autopopulate.
 - The ability to deposit and withdraw PC from your account.
 - Working with CSV files, storing both user accounts as well as blocks.
@@ -19,3 +20,8 @@ This project started with a simple question: **"This 'blockchain' thing is reall
 - Mulitple accounts "Checking - Savings"?
 - Interest rates?
 - Last, certainly not least, and certainly not in V1: A full GUI built on something like PyQt5, PyGUI, or Kivy.
+
+## PicoCoin Terminal is built with the following dependencies:
+
+- csv
+- termcolor
