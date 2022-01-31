@@ -4,12 +4,13 @@ import TerminalManager as term
 #Take care of the files
 
 USER_PATH = 'data/users.csv'
+CHAIN_PATH = 'data/chain.csv'
 
 #Check if the files even exist.
 def _file_exists(path: str) -> bool:
 
     if os.path.exists(path):
-        term.print_success('File \'' + path + '\' found!')
+        # TODO Implement a debug flag term.print_success('File \'' + path + '\' found!')
         return True
     else:
         term.print_error('File \'' + path + '\' not found. Generating empty file') #If the file doesn't exist, create it.
@@ -73,7 +74,7 @@ def update_balance(public_key: str, balance: int):
 
             if entry[2] == public_key:
                 entry[1] = balance
-                term.print_success('Balance for user ' + entry[0] + ' successfully updated')
+                #DEBUG term.print_success('Balance for user ' + entry[0] + ' successfully updated')
 
     with open(USER_PATH, 'w') as userbase:
         writer = csv.writer(userbase)
@@ -81,6 +82,40 @@ def update_balance(public_key: str, balance: int):
         for entry in users:
             writer.writerow(entry)
 
-#add_user('Rhyse', 12, '568aefd')
-#user = load_user('Jacob', 'b78d7a3abd660d67a8e9b9dfa7e839619b1cb7fb74cf329b71ef0f700991eb79')
-#print(user[0], user[2])
+#Write a new block
+def write_block(block: dict):
+
+    if _file_exists(CHAIN_PATH):
+
+        with open(CHAIN_PATH, 'a') as blockchain:
+            writer = csv.writer(blockchain)
+            writer.writerow(block.values())
+
+#Get the last block in the list
+def last_block():
+
+    if _file_exists(CHAIN_PATH):
+
+        with open(CHAIN_PATH, 'r') as blockchain:
+            reader = csv.reader(blockchain)
+            
+            lines = 0
+
+            for line in reader:
+                lines += 1
+
+            #If the number of lines is 0, the file is empty
+            if lines == 0:
+                return False
+            else:
+                
+                block = {
+
+                    'index': line[0],
+                    'timestamp': line[1],
+                    'data': line[2],
+                    'proof': line[3],
+                    'previous_hash': line[4]
+                }
+
+                return block

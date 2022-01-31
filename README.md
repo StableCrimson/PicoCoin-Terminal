@@ -4,6 +4,12 @@ This project started with a simple question: **"This 'blockchain' thing is reall
 
 ## What's new in this dev build?
 
+- Blocks are now recorded in a file, and all previous blocks are references from the file as well.
+- Blocks are now much more secure and include more information including, but not limited to: Timestamp, transaction index, and transaction type.
+- Deposits and withdraws are now logged in the blockchain. They are also passed through a transaction handler instead of being handled by the userbase manager.
+
+## What's new in V1?
+
 - Terminal clearing and colored text. Adds a lot more cleanliness and polish to the user experience.
 - Completely redesigned menu system. Once a user logs in, they stay logged in until they decide to log out.
 - Users have the ability to deposit, withdraw, and delete their accounts. Account deletion cannot be done until the user has a balance of 0.

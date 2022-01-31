@@ -1,6 +1,7 @@
 from numpy import setdiff1d
 import TerminalManager as term
 import Userbase as base
+import Transaction as trans
 #Main, pretty self explanatory
 
 #Handle the actual menu
@@ -46,13 +47,15 @@ def user_menu(name: str, key: str):
 
     balance = base.get_balance(name, key)
 
-    term.print_header('Welcome back, ' + name + '!')
+    term.print_header('Welcome back, ' + name + '!\n')
     print('Current balance: ', end='')
     
     if balance > 0:
-        term.print_success(str(balance) + 'PC\n')
+        term.print_success(str(balance) + 'PC')
     else:
-        term.print_error(str(balance) + 'PC\n')
+        term.print_error(str(balance) + 'PC')
+
+    print('Public key:', base._create_key(name, key), '\n')
 
     print('1. Deposit')
     print('2. Withdraw')
@@ -65,11 +68,19 @@ def user_menu(name: str, key: str):
 
     if choice == '1':
         term.clear()
-        base.direct(name, key, False)
+        trans.deposit(name, key)
         user_menu(name, key)
     elif choice == '2':
         term.clear()
-        base.direct(name, key, True)
+        trans.withdraw(name, key)
+        user_menu(name, key)
+    elif choice == '3':
+        term.clear()
+        term.print_header('Not added yet!')
+        user_menu(name, key)
+    elif choice == '4':
+        term.clear()
+        term.print_header('Not added yet!')
         user_menu(name, key)
     elif choice == '5':
         term.clear()
@@ -86,4 +97,5 @@ def user_menu(name: str, key: str):
 
 #Main method
 if __name__ == '__main__':
+    term.clear()
     main_menu()

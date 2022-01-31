@@ -63,7 +63,7 @@ def remove_user(username: str):
 #Directly changing the balance deposit/withdraw
 def direct(username: str, private_key: str, withdraw: bool):
 
-    amount = ''
+    #amount = ''
 
     #Change the prompt based on if we are withdrawing or not
     if withdraw:
@@ -93,10 +93,6 @@ def direct(username: str, private_key: str, withdraw: bool):
     term.clear()
     res_man.update_balance(_create_key(username, private_key), total)
     
-
-
-
-
 #Create the public key for a user
 def _create_key(username: str, private_key: str) -> str:
 
