@@ -1,4 +1,3 @@
-from numpy import setdiff1d
 import TerminalManager as term
 import Userbase as base
 import Transaction as trans
@@ -7,7 +6,6 @@ import Transaction as trans
 #Handle the actual menu
 def main_menu():
 
-    term.print_header("Welcome to the PicoCoin terminal!")
     print('1. Log In')
     print('2. Sign Up')
     print('3. Exit')
@@ -50,6 +48,7 @@ def user_menu(name: str, key: str):
     term.print_header('Welcome back, ' + name + '!\n')
     print('Current balance: ', end='')
     
+    #No money? Heh, you get the red text, buddy
     if balance > 0:
         term.print_success(str(balance) + 'PC')
     else:
@@ -76,11 +75,11 @@ def user_menu(name: str, key: str):
         user_menu(name, key)
     elif choice == '3':
         term.clear()
-        term.print_header('Not added yet!')
+        trans.transfer(name, key)
         user_menu(name, key)
     elif choice == '4':
         term.clear()
-        term.print_header('Not added yet!')
+        trans.get_history(name, key)
         user_menu(name, key)
     elif choice == '5':
         term.clear()
@@ -97,5 +96,7 @@ def user_menu(name: str, key: str):
 
 #Main method
 if __name__ == '__main__':
+
     term.clear()
+    term.print_header("Welcome to the PicoCoin terminal!")
     main_menu()

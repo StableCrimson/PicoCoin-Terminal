@@ -4,9 +4,9 @@ This project started with a simple question: **"This 'blockchain' thing is reall
 
 ## What's new in this dev build?
 
-- Blocks are now recorded in a file, and all previous blocks are references from the file as well.
-- Blocks are now much more secure and include more information including, but not limited to: Timestamp, transaction index, and transaction type.
-- Deposits and withdraws are now logged in the blockchain. They are also passed through a transaction handler instead of being handled by the userbase manager.
+- Transactions between users are now possible, and are logged in the blockchain as well.
+- Transaction history is now available. When viewing history, only transactions that involve you will be shown, and your public key will be replaced with your username to increase readability.
+- Structure of a transaction in the history view is vastly improved upon, including the transaction type, amount, timestamp, and transaction index.
 
 ## What's new in V1?
 
@@ -17,6 +17,9 @@ This project started with a simple question: **"This 'blockchain' thing is reall
 - Withdraws cannot be completed if the amount they are withdrawing is larger than their account balance.
 - User balance is displayed right on their home page.
 - All operations involving users (Creating, verifying, deleting, balance updating, etc.) is based entirely within the reading and writing of CSV files. Userbase is no longer based in memory.
+- Blocks are now recorded in a file, and all previous blocks are references from the file as well.
+- Blocks are now much more secure and include more information including, but not limited to: Timestamp, transaction index, and transaction type.
+- Deposits and withdraws are now logged in the blockchain. They are also passed through a transaction handler instead of being handled by the userbase manager.
 
 ## Features I want to include in V1 and beyond:
 
@@ -27,7 +30,7 @@ This project started with a simple question: **"This 'blockchain' thing is reall
 - Cryptography, all data written to files is encrypted, and all data read to files is decrypted.
 - ~~All blocks and users are no longer based in memory, but are directly pulled to and written to static files.~~ Added
 - ~~Redesigning the anatomy of the contents of a block to make it more compact, and efficient.~~ Added
-- Implement methods to make transaction history far more user readable.
+- ~~Implement methods to make transaction history far more user readable.~~ Added
 - Friends list. If users are considered friends, you can use their username instead of the public key and their key will autopopulate for your. Ex: Instead of typing ***2c70e12b7a0646f92279f427c7b38e7334d8e5389cff167a1dc30e73f826b683***, you could just type ***Jacob*** and the key would populate itself.
 - ~~Mess around with nonces and hash signing.~~ Added
 - ~~Balance checking. Ie: If you have 12PC in your account, you can only move 12PC, we don't just generate money.~~ Added

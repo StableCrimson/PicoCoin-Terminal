@@ -18,7 +18,7 @@ def _file_exists(path: str) -> bool:
         return False
 
 #Get the data of a single user
-def load_user(name: str, public_key: str) -> list[str]:
+def load_user(public_key: str) -> list[str]:
 
     with open(USER_PATH, 'r') as userbase:
         reader = csv.reader(userbase)
@@ -26,12 +26,11 @@ def load_user(name: str, public_key: str) -> list[str]:
 
         for entry in reader:
             
-            if entry[0] == name and entry[2] == public_key:
+            if entry[2] == public_key:
                 return entry
         
         term.print_error('Unable to find user')
         return ['NOTFOUND', 'NOTFOUND', 'NOTFOUND']
-
 
 #Add a user to the userbase
 def add_user(name: str, balance: int, public_key: str):
@@ -119,3 +118,37 @@ def last_block():
                 }
 
                 return block
+
+#Get the transactions that involve a specific user
+def get_history(public_key: str) -> list():
+
+    if _file_exists(CHAIN_PATH):
+
+        with open(CHAIN_PATH, 'r') as blockchain:
+            reader = csv.reader(blockchain)
+            
+            lines = 0
+            history = list()
+
+            for line in reader:
+
+                lines += 1
+
+                if lines == 0:
+                    return False
+
+                data = line[2].split('|')
+
+                if data[2].startswith(public_key) or data[2].endswith(public_key):
+                
+                    block = {
+
+                        'index': line[0],
+                        'timestamp': line[1],
+                        'data': line[2],
+                        'proof': line[3],
+                        'previous_hash': line[4]
+                    }
+                    history.append(block)
+
+            return history

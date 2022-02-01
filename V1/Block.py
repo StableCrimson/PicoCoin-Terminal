@@ -3,7 +3,7 @@ import ResourceManager as res_man
 import TerminalManager as term
 import hashlib, json
 
-SIGNATURE = '00100'
+SIGNATURE = '001100'
 
 #Just compile this all into a dictionary and return it
 def create_block(index: int, data: str, proof: int, previous_hash: str):
