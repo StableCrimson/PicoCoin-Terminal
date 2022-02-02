@@ -119,17 +119,30 @@ def get_history(name: str, private_key: str):
         contents = entry['data'].split('|')
         amount = contents[1]
         addresses = contents[2].replace(public_key, name) #Replace the public key with your username
+
+        #If money is moving away from our account, show it red.
+        #If money is moving to our account, show it green
+        if addresses.startswith(name):
+            money_color = 'red'
+        else:
+            money_color = 'green'
         
         #Get the transaction type
         if contents[0] == '0':
             type = 'DEPOSIT'
+            type_color = 'green'
         elif contents[0] == '1':
             type = 'WITHDRAW'
+            type_color = 'red'
         elif contents[0] == '2':
             type = 'TRANSFER'
+            type_color = 'yellow'
         else:
             term.print_error('Something went wrong, invalid transaction type. Please have an administrator check the validity of the blockchain')
 
-        print('Transaction #' + entry['index'] + ' | Timestamp: ' + entry['timestamp'] + ' | Transaction type: ' + type)
-        print('Amount: ' + amount + ' | ' + addresses + '\n')
+        term.print_history(entry['index'], entry['timestamp'], type, amount, addresses, type_color, money_color)
+
+    #Wait until the user is done before going back
+    input('Enter anything to continue: ')
+    term.clear()
 

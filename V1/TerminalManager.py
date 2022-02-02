@@ -16,8 +16,21 @@ def print_error(message: str):
 
 #Print a header in gold
 def print_header(message: str):
-    print(colored(message, 'yellow'))
+    print(colored(message, 'yellow', attrs=['underline']))
 
 #Print a success in green
 def print_success(message: str):
     print(colored(message, 'green'))
+
+#Print a public key
+def print_key(message: str):
+    print(colored(message, 'cyan'))
+
+#Make the transaction history pretty
+def print_history(index: str, timestamp: str, type: str, amount: str, addresses: str, type_color: str, money_color: str):
+
+    colored_type = colored(type, type_color)
+    colored_money = colored(amount + 'PC', money_color)
+
+    print('Transaction #' + index + ' | Timestamp: ' + timestamp + ' | Transaction type: ' + colored_type)
+    print('Amount: ' + colored_money + ' | ' + colored(addresses, 'cyan') + '\n')

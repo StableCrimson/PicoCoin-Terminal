@@ -4,9 +4,10 @@ This project started with a simple question: **"This 'blockchain' thing is reall
 
 ## What's new in this dev build?
 
-- Transactions between users are now possible, and are logged in the blockchain as well.
-- Transaction history is now available. When viewing history, only transactions that involve you will be shown, and your public key will be replaced with your username to increase readability.
-- Structure of a transaction in the history view is vastly improved upon, including the transaction type, amount, timestamp, and transaction index.
+- Transaction history is now formatted to be a bit nicer to look at.
+- Header text is now underlined.
+- Added requirements.txt
+- Public keys are now displayed in cyan text.
 
 ## What's new in V1?
 
@@ -20,6 +21,9 @@ This project started with a simple question: **"This 'blockchain' thing is reall
 - Blocks are now recorded in a file, and all previous blocks are references from the file as well.
 - Blocks are now much more secure and include more information including, but not limited to: Timestamp, transaction index, and transaction type.
 - Deposits and withdraws are now logged in the blockchain. They are also passed through a transaction handler instead of being handled by the userbase manager.
+- Transactions between users are now possible, and are logged in the blockchain as well.
+- Transaction history is now available. When viewing history, only transactions that involve you will be shown, and your public key will be replaced with your username to increase readability.
+- Structure of a transaction in the history view is vastly improved upon, including the transaction type, amount, timestamp, and transaction index.
 
 ## Features I want to include in V1 and beyond:
 

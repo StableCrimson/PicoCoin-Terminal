@@ -134,11 +134,14 @@ def get_history(public_key: str) -> list():
 
                 lines += 1
 
+                #Make sure that the file isn't empty
                 if lines == 0:
-                    return False
+                    return None
 
+                #Split the actual transaction information
                 data = line[2].split('|')
 
+                #If the transaction contains the key of the user in question, it pertains to them so we need to return it
                 if data[2].startswith(public_key) or data[2].endswith(public_key):
                 
                     block = {

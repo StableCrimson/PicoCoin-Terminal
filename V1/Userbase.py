@@ -17,7 +17,6 @@ import hashlib
 def create_user():
     
     name = input('Please enter your username: ')
-    #TODO Verify that there aren't other users by that name
 
     private_key = input('Hi ' + name + ', please enter your private key: ')
     term.clear()

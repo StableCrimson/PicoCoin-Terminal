@@ -54,7 +54,8 @@ def user_menu(name: str, key: str):
     else:
         term.print_error(str(balance) + 'PC')
 
-    print('Public key:', base._create_key(name, key), '\n')
+    print('Public key: ', end='')
+    term.print_key(base._create_key(name, key) + '\n')
 
     print('1. Deposit')
     print('2. Withdraw')
