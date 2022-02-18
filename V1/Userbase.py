@@ -1,4 +1,3 @@
-from venv import create
 import ResourceManager as res_man
 import TerminalManager as term
 import hashlib
@@ -37,11 +36,13 @@ def remove_user(username: str):
 
     term.clear()
 
+    #If we can't verify your key, can't delete
     if not verify_key(username, key):
         term.clear()
         term.print_error('Unable to verify the key')
         return 0
 
+    #If you have money in your account, can't delete
     if get_balance(username, key) != 0:
         term.clear()
         term.print_error('Cannot remove user with funds in account')
@@ -49,15 +50,16 @@ def remove_user(username: str):
 
     choice = input('This action cannot be undone, are you sure? (y/n): ')
 
-    if choice == "y".lower():
-        term.clear()
-        res_man.remove_user(_create_key(username, key))
-    elif choice == 'n'.lower():
-        term.clear()
-        return 0
-    else:
-        term.print_error('Invalid input!')
-        return 0
+    match choice.lower():
+        case "y":
+            term.clear()
+            res_man.remove_user(_create_key(username, key))
+        case 'n':
+            term.clear()
+            return 0
+        case _:
+            term.print_error('Invalid input!')
+            return 0
     
 #Create the public key for a user
 def _create_key(username: str, private_key: str) -> str:

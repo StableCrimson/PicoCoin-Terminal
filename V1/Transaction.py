@@ -128,17 +128,18 @@ def get_history(name: str, private_key: str):
             money_color = 'green'
         
         #Get the transaction type
-        if contents[0] == '0':
-            type = 'DEPOSIT'
-            type_color = 'green'
-        elif contents[0] == '1':
-            type = 'WITHDRAW'
-            type_color = 'red'
-        elif contents[0] == '2':
-            type = 'TRANSFER'
-            type_color = 'yellow'
-        else:
-            term.print_error('Something went wrong, invalid transaction type. Please have an administrator check the validity of the blockchain')
+        match contents[0]:
+            case '0':
+                type = 'DEPOSIT'
+                type_color = 'green'
+            case '1':
+                type = 'WITHDRAW'
+                type_color = 'red'
+            case '2':
+                type = 'TRANSFER'
+                type_color = 'yellow'
+            case _:
+                term.print_error('Something went wrong, invalid transaction type. Please have an administrator check the validity of the blockchain')
 
         term.print_history(entry['index'], entry['timestamp'], type, amount, addresses, type_color, money_color)
 
