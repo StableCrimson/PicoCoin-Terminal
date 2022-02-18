@@ -1,10 +1,8 @@
+# ***V1 is out!***
+
 # Preface
 
 This project started with a simple question: **"This 'blockchain' thing is really important to crypto. How does blockchain work?"** After watching a phenomenal explanation of the concept and execution on YouTube, I decided to give it a shot. So I wrote a simple blockchain in Python. "Cool," I thought. "What if I could make transactions myself, instead of hard-coding the debug ones?" So I added that. "What if I could view the previous transactions?" So I added that. "What if it was a menu-driven program that had user management, authentication, key generation/verificiation, and balance tracking?" So I added that. This project outgrew it's scope within a matter of hours. It was built with one intention, and each new feature I dreamt up had to be adapted more and more to work with my increasingly archaic code. So it's time for a complete rewrite. Start from scratch with a whole host of new QoL and security features in mind. This commit marks the transition from an ad-hoc crypto wallet that's the result of a bunch of code thrown on top of a blockchain demo, to something more: ***PicoCoin Terminal V1***
-
-## What's new in this dev build?
-
-- Updated some of the code with the new 'match' statement added in Python 3.10
 
 ## What's new in V1?
 
