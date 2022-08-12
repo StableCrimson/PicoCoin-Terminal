@@ -1,2 +1,1 @@
-csv
-termcolor
+rich==11.2.0

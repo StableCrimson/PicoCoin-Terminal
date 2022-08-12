@@ -1,5 +1,4 @@
 import csv, os.path
-from posixpath import split
 import TerminalManager as term
 #Take care of the files
 
@@ -7,7 +6,7 @@ USER_PATH = 'data/users.csv'
 CHAIN_PATH = 'data/chain.csv'
 
 #Check if the files even exist.
-def _file_exists(path: str) -> bool:
+def file_exists(path: str) -> bool:
 
     if os.path.exists(path):
         # TODO Implement a debug flag term.print_success('File \'' + path + '\' found!')
@@ -84,7 +83,7 @@ def update_balance(public_key: str, balance: int):
 #Write a new block
 def write_block(block: dict):
 
-    if _file_exists(CHAIN_PATH):
+    if file_exists(CHAIN_PATH):
 
         with open(CHAIN_PATH, 'a') as blockchain:
             writer = csv.writer(blockchain)
@@ -93,7 +92,7 @@ def write_block(block: dict):
 #Get the last block in the list
 def last_block():
 
-    if _file_exists(CHAIN_PATH):
+    if file_exists(CHAIN_PATH):
 
         with open(CHAIN_PATH, 'r') as blockchain:
             reader = csv.reader(blockchain)
@@ -122,7 +121,7 @@ def last_block():
 #Get the transactions that involve a specific user
 def get_history(public_key: str) -> list():
 
-    if _file_exists(CHAIN_PATH):
+    if file_exists(CHAIN_PATH):
 
         with open(CHAIN_PATH, 'r') as blockchain:
             reader = csv.reader(blockchain)

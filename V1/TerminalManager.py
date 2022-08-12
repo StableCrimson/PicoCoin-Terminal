@@ -1,6 +1,7 @@
 #This here is going to take care of things like clearing the screen and printing colored text
 #Just adds a bit of polish and cleanliness to the overall user experience.
-from termcolor import colored
+from rich import print
+from rich.panel import Panel
 from os import system, name
 
 #Clear the terminal
@@ -12,25 +13,19 @@ def clear():
         _ = system('clear')
 #Print an error to the console
 def print_error(message: str):
-    print(colored(message, 'red'))
+    print('[red]' + message)
 
 #Print a header in gold
 def print_header(message: str):
-    print(colored(message, 'yellow', attrs=['underline']))
+    print('[yellow][bold][underline]' + message)
 
 #Print a success in green
 def print_success(message: str):
-    print(colored(message, 'green'))
+    print('[green]' + message)
 
 #Print a public key
 def print_key(message: str):
-    print(colored(message, 'cyan'))
+    print('[cyan]' + message)
 
-#Make the transaction history pretty
-def print_history(index: str, timestamp: str, type: str, amount: str, addresses: str, type_color: str, money_color: str):
-
-    colored_type = colored(type, type_color)
-    colored_money = colored(amount + 'PC', money_color)
-
-    print('Transaction #' + index + ' | Timestamp: ' + timestamp + ' | Transaction type: ' + colored_type)
-    print('Amount: ' + colored_money + ' | ' + colored(addresses, 'cyan') + '\n')
+def print_menu(message: str, title: str):
+    print(Panel.fit(message, title=title))

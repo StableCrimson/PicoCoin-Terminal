@@ -8,10 +8,13 @@
     Provide a transaction history
         Loop through the data in the blockchain. If the data contains your public key, add it to the list and return it
 '''
+from rich.table import Table
+from rich import print, box
 import TerminalManager as term
 import Userbase as users
 import ResourceManager as res_man
 import Block as block
+from datetime import datetime
 
 #Deposit to your account
 def deposit(username: str, private_key: str):
@@ -31,8 +34,7 @@ def deposit(username: str, private_key: str):
 
     #Create the data for the transaction and throw it into the blockchain
     #If we were able to mine it, update the user's balance
-    block_data = ['0', amount, 'DEPOSIT->' + public_key]
-    print('Mining... ', end='')
+    block_data = ['0', amount, 'FIAT -> ' + public_key]
     block.mine_block('|'.join(block_data))
     res_man.update_balance(public_key, total)
     term.print_success('Done!')
@@ -57,11 +59,9 @@ def withdraw(username: str, private_key: str):
         term.print_error('Not enough funds available')
         return None
 
-    print('Mining... ', end='')
-
     #Create the data for the transaction and throw it into the blockchain
     #If we were able to mine it, update the user's balance
-    block_data = ['1', amount, public_key + '->WITHDRAW']
+    block_data = ['1', amount, public_key + ' -> FIAT']
     block.mine_block('|'.join(block_data))
     res_man.update_balance(public_key, total)
     term.print_success('Done!')
@@ -100,8 +100,7 @@ def transfer(username: str, private_key: str):
         term.print_error('Not enough funds available')
         return None
 
-    print('Mining... ', end='')
-    block_data = ['2', amount, sender_key + '->' + recipient_key]
+    block_data = ['2', amount, sender_key + ' -> ' + recipient_key]
     block.mine_block('|'.join(block_data))
     res_man.update_balance(sender_key, sender_total)
     res_man.update_balance(recipient_key, recipient_total)
@@ -113,35 +112,70 @@ def get_history(name: str, private_key: str):
     public_key = users._create_key(name, private_key)
     history = res_man.get_history(public_key)
 
+    #Get the table set up
+    table = Table(title='[bold][yellow]Transaction History', header_style='bold white')
+    table.box = box.DOUBLE_EDGE
+    table.border_style = 'white'
+    table.row_styles = ['none', 'dim']
+
+    #Create our columns
+    table.add_column('Block', justify='right')
+    table.add_column('Date')
+    table.add_column('Time')
+    table.add_column('Type')
+    table.add_column('Amount', justify='right')
+    table.add_column('From', justify='right', overflow='fold')
+    table.add_column('->', justify='center')
+    table.add_column('To', justify='left', overflow='fold')
+
+    #Format our columns
+    table.columns[0].header_style = 'bold bright_white'
+    table.columns[0].style = 'white'
+    table.columns[1].header_style = 'bold bright_green'
+    table.columns[1].style = 'bright_green'
+    table.columns[2].header_style = 'bold magenta'
+    table.columns[2].style = 'magenta'
+    table.columns[3].header_style = 'bold bright_red'
+    table.columns[3].style = 'bright_red'
+    table.columns[4].header_style = 'bold bright_yellow'
+    table.columns[4].style = 'bright_yellow'
+    table.columns[5].header_style = 'bold bright_blue'
+    table.columns[5].style = 'bright_blue'
+    table.columns[6].header_style = 'bold bright_blue'
+    table.columns[6].style = 'bright_blue'
+    table.columns[7].header_style = 'bold bright_blue'
+    table.columns[7].style = 'bright_blue'
+
     for entry in history:
 
         #Digest the contents of the block and make it readable before displaying it
         contents = entry['data'].split('|')
-        amount = contents[1]
+        amount = contents[1] + 'PC'
         addresses = contents[2].replace(public_key, name) #Replace the public key with your username
-
-        #If money is moving away from our account, show it red.
-        #If money is moving to our account, show it green
-        if addresses.startswith(name):
-            money_color = 'red'
-        else:
-            money_color = 'green'
         
         #Get the transaction type
         match contents[0]:
             case '0':
                 type = 'DEPOSIT'
-                type_color = 'green'
             case '1':
                 type = 'WITHDRAW'
-                type_color = 'red'
             case '2':
                 type = 'TRANSFER'
-                type_color = 'yellow'
             case _:
                 term.print_error('Something went wrong, invalid transaction type. Please have an administrator check the validity of the blockchain')
 
-        term.print_history(entry['index'], entry['timestamp'], type, amount, addresses, type_color, money_color)
+        #Process the transaction so that it's a little nicer
+        segmented = addresses.split(' ')
+
+        #Process the timestamp to something a bit more presentable
+        timestamp = datetime.strptime(entry['timestamp'], '%Y-%m-%d %H:%M:%S.%f')
+        date = timestamp.strftime('%b %d, %Y')
+        time = timestamp.strftime('%H:%M %p')
+
+        #Add the new row to the table
+        table.add_row('#' + entry['index'], date, time, type, amount, segmented[0], segmented[1], segmented[2])
+
+    print(table)
 
     #Wait until the user is done before going back
     input('Enter anything to continue: ')

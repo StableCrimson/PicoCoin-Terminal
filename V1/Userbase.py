@@ -1,6 +1,7 @@
 import ResourceManager as res_man
 import TerminalManager as term
 import hashlib
+from rich.prompt import Confirm
 
 #Handle the entire userbase, all of it.
 '''
@@ -15,9 +16,9 @@ import hashlib
 #Create a new user
 def create_user():
     
-    name = input('Please enter your username: ')
+    name = input('Please enter your first name: ')
 
-    private_key = input('Hi ' + name + ', please enter your private key: ')
+    private_key = input('Hi, ' + name + '! Please enter your password (This will be your private key): ')
     term.clear()
     public_key = _create_key(name, private_key)
 
@@ -48,18 +49,13 @@ def remove_user(username: str):
         term.print_error('Cannot remove user with funds in account')
         return 0
 
-    choice = input('This action cannot be undone, are you sure? (y/n): ')
+    if Confirm.ask('This action cannot be undone, are you sure?'):
+        term.clear()
+        res_man.remove_user(_create_key(username, key))
+    else:
+        term.clear()
+        return 0
 
-    match choice.lower():
-        case "y":
-            term.clear()
-            res_man.remove_user(_create_key(username, key))
-        case 'n':
-            term.clear()
-            return 0
-        case _:
-            term.print_error('Invalid input!')
-            return 0
     
 #Create the public key for a user
 def _create_key(username: str, private_key: str) -> str:

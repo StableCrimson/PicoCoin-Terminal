@@ -6,9 +6,12 @@ import Transaction as trans
 #Handle the actual menu
 def main_menu():
 
-    print('1. Log In')
-    print('2. Sign Up')
-    print('3. Exit')
+    menu = ('1. Log In\n' + 
+            '2. Sign Up\n' + 
+            '3. Exit')
+
+    term.print_menu(menu, 'Main')
+
     choice = input('Please make your selection: ')
 
     match choice:
@@ -22,7 +25,7 @@ def main_menu():
             #If we can't varify you, go back to the menu
             if not base.verify_key(name, key):
                 term.clear()
-                term.print_error('Cannot verify user ' + name)
+                term.print_error('Cannot verify user ' + name + '.')
                 main_menu()
 
             term.clear()
@@ -58,12 +61,14 @@ def user_menu(name: str, key: str):
     print('Public key: ', end='')
     term.print_key(base._create_key(name, key) + '\n')
 
-    print('1. Deposit')
-    print('2. Withdraw')
-    print('3. Transfer')
-    print('4. Transaction History')
-    print('5. Delete Account')
-    print('6. Log Out')
+    menu = ('1. Deposit\n' + 
+            '2. Withdraw\n' + 
+            '3. Transfer\n' + 
+            '4. Transaction History\n' + 
+            '5. Delete Account\n' + 
+            '6. Log Out')
+
+    term.print_menu(menu, 'How can I help you today?')
 
     choice = input('Please enter your choice: ')
 

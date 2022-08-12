@@ -1,31 +1,40 @@
 #Provides encryption functionality to the resource manager
-from Crypto.Cipher import AES
+from cryptography.fernet import Fernet
+import csv
+import os.path
 
-#Encode a string
-def encode(data):
+KEY_PATH = 'data/key.key'
 
-    key= b'SILCINEEDGARPICO'
-    cipher = AES.new(key, AES.MODE_EAX)
-    nonce = cipher.nonce
-    print('Success')
-    encrypted_data, tag = cipher.encrypt_and_digest(bytes(data, 'UTF-8'))
-    return nonce, encrypted_data, tag
+'''with open('data/dec_users.csv', 'wb') as users:
+    users.write(readable)'''
 
-def decode(nonce, data, tag) -> str:
+def encrypt(source: str, dest: str):
+    #Does the key exist?
+    if os.path.exists(KEY_PATH):
 
-    print(data)
-    cipher = AES.new(tag, AES.MODE_EAX, nonce=nonce)
-    plaintext = cipher.decrypt(bytes.decode(data))
+        #Yes? Read it.
+        with open(KEY_PATH, 'rb') as key_file:
+            key = key_file.read()
 
-    try:
-        cipher.verify(data)
-        print(plaintext)
-        return plaintext
-    except ValueError:
-        print('Incorrect key or message corrupted')
+    else:
 
-nonce, secret, tag = encode('Helloworld!')
-secret = decode(nonce, secret, tag)
-print(secret)
+        #No? Generate a new one
+        print('Key file not found, generating new key.')
+        key = Fernet.generate_key()
 
-#TODO Add PyCryptodome to the dependency list if I can get this to work
+        with open(KEY_PATH, 'wb') as key_file:
+            key_file.write(key)
+
+    f = Fernet(key)
+
+    with open(source, 'r') as source_file:
+        with open(dest, 'wb') as dest_file:
+
+            reader = csv.reader(source_file)
+            writer = csv.writer(dest_file)
+
+            for line in reader:
+                writer.writerow(f.encrypt(line))
+
+encrypt('data/users.csv', 'data/new_users.csv')
+encrypt('data/chain.csv', 'data/new_chain.csv')

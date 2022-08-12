@@ -2,6 +2,7 @@ import datetime as dt
 import ResourceManager as res_man
 import TerminalManager as term
 import hashlib, json
+from rich.console import Console
 
 SIGNATURE = '001100'
 
@@ -23,25 +24,28 @@ def create_block(index: int, data: str, proof: int, previous_hash: str):
 #Mine a block
 def mine_block(data: str):
 
-    #If there is no previous block, create the genesis
-    if not res_man.last_block():
+    console = Console()
 
-        term.print_header('No previous block found, creating GENESIS')
-        previous_block = {'GENESIS': 'GENESIS'}
-        previous_proof = '0'
-        index = 0
-        proof = 0
-        previous_hash = 'GENESIS'
-        create_block(index, data, proof, previous_hash)
+    with console.status('Mining...') as status:
+        #If there is no previous block, create the genesis
+        if not res_man.last_block():
 
-    else:
+            term.print_header('No previous block found, creating GENESIS')
+            previous_block = {'GENESIS': 'GENESIS'}
+            previous_proof = '0'
+            index = 0
+            proof = 0
+            previous_hash = 'GENESIS'
+            create_block(index, data, proof, previous_hash)
 
-        previous_block = res_man.last_block()
-        previous_proof = int(previous_block['proof'])
-        index = int(previous_block['index']) + 1
-        proof = proof_of_work(index, previous_proof, data)
-        previous_hash = hash_block(previous_block)
-        create_block(index, data, proof, previous_hash)
+        else:
+
+            previous_block = res_man.last_block()
+            previous_proof = int(previous_block['proof'])
+            index = int(previous_block['index']) + 1
+            proof = proof_of_work(index, previous_proof, data)
+            previous_hash = hash_block(previous_block)
+            create_block(index, data, proof, previous_hash)
 
 #Compute the proof of work for the block
 def proof_of_work(index: int, previous_proof: str, data: str) -> int:
